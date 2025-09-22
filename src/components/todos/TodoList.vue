@@ -4,8 +4,8 @@
       v-for="option in list"
       :key="option.id"
       :item="option"
-      @delete="emit('delete', $event)"
-      @toggle-completed="emit('toggle-completed', $event)"
+      @delete="$emit('delete', $event)"
+      @toggle-completed="$emit('toggle-completed', $event)"
     ></TodoItem>
   </v-list>
 </template>
@@ -15,7 +15,7 @@ import type { Todo } from '../../types/todo.ts';
 import TodoItem from './TodoItem.vue';
 
 defineProps<{ list: Todo[] }>();
-const emit = defineEmits<{
+defineEmits<{
   (event: 'delete', id: string): void;
   (event: 'toggle-completed', id: string): void;
 }>();

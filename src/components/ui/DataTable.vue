@@ -6,7 +6,6 @@
 
 <script setup lang="ts">
 import { defineProps } from 'vue';
-import type { PropType } from 'vue';
 
 export interface Column {
   title: string;
@@ -19,18 +18,9 @@ export interface DataItem {
   [key: string]: string | number | undefined;
 }
 
-defineProps({
-  title: {
-    type: String,
-    required: true,
-  },
-  columns: {
-    type: Array as PropType<Column[]>,
-    required: true,
-  },
-  data: {
-    type: Array as PropType<DataItem[] | undefined>,
-    required: true,
-  },
-});
+defineProps<{
+  title: string;
+  columns: Column[];
+  data: DataItem[] | undefined;
+}>();
 </script>

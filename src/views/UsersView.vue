@@ -2,7 +2,7 @@
   <div>
     <v-container>
       <div v-if="isLoading">Loading users...</div>
-      <div v-else-if="isError">Failed to load users.</div>
+      <div v-else-if="isError">{{ errorMessage }}</div>
       <DataTable title="Users" :data="safeUsers" :columns="columns" />
     </v-container>
   </div>
@@ -20,7 +20,11 @@ const columns: Column[] = [
   { title: 'Email', key: 'email' },
 ];
 
-const { data: users, isLoading, isError } = useUsersQuery();
+const { data: users, isLoading, isError, error } = useUsersQuery();
 
 const safeUsers = computed(() => users.value ?? []);
+
+const errorMessage = computed(
+  () => error?.value?.message || 'Failed to load users'
+);
 </script>
