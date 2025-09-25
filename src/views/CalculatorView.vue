@@ -68,6 +68,12 @@ function clickBtn(value: string) {
   if (value === 'C') {
     display.value = '0';
     currentInput.value = '';
+  } else if (value === '%') {
+    currentInput.value += '/100';
+    display.value = currentInput.value;
+  } else if (value === '+/-') {
+    currentInput.value = `-(${currentInput.value})`;
+    display.value = currentInput.value;
   } else if (value === '=') {
     const VALID_EXPRESSION_REGEX = /^[0-9+\-*/().\s]+$/;
     if (VALID_EXPRESSION_REGEX.test(currentInput.value)) {
@@ -86,6 +92,18 @@ function clickBtn(value: string) {
       }
     }
   } else {
+    const SYMBOLS_REGEX = /^[+\-*/.]$/;
+    const isOperator = (value: string) => SYMBOLS_REGEX.test(value);
+    if (!currentInput.value && isOperator(value)) {
+      // Prevent starting with an operator
+      return;
+    }
+
+    const lastChar = currentInput.value.slice(-1);
+    if (isOperator(lastChar) && isOperator(value)) {
+      // Prevent consecutive operators
+      return;
+    }
     currentInput.value += value;
     display.value = currentInput.value;
   }
@@ -97,20 +115,14 @@ function clickBtn(value: string) {
   width: 350px;
 }
 .grid {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 8px;
 }
 .grid-row {
-  display: flex;
-  gap: 8px;
-}
-.calc-button {
-  flex: 1;
+  display: contents;
 }
 .calc-button.wide {
-  flex-grow: 2;
-  flex-basis: calc(50% - 4px);
-  max-width: calc(50% - 4px);
+  grid-column: span 2;
 }
 </style>
