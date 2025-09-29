@@ -6,6 +6,9 @@
       <v-btn to="/users" variant="text" router>Users</v-btn>
       <v-btn to="/todo-list" variant="text" router>Todo List</v-btn>
       <v-btn to="/calculator" variant="text" router>Calculator</v-btn>
+      <v-btn to="/currency-converter" variant="text" router
+        >Currency Converter</v-btn
+      >
     </v-app-bar>
     <v-main>
       <router-view />
